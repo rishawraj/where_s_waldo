@@ -1,20 +1,47 @@
 import { useEffect, useState } from "react";
 import image from "../assets/img1.jpg";
+import { data } from "./data";
 
 export default function ImageContainer() {
   const [pos, setPos] = useState([0, 0]);
   const [display, setDisplay] = useState(true);
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
+
+  type obj = {
+    top: number;
+    left: number;
+    right: number;
+    bottom: number;
+  };
+
+  const handleButtonClick = ({ top, left, right, bottom }: obj): void => {
+    if (left < x && x < right && top < y && bottom > y) {
+      console.log("yes");
+    } else {
+      console.log("no");
+    }
+    setDisplay(!display);
+  };
+
+  const handlelclick = (e: MouseEvent) => {
+    const waldoImg = document.getElementById("waldo-img") as HTMLImageElement;
+
+    setDisplay(!display);
+    setPos([e.clientY + 10, e.clientX + 10]);
+
+    let offsets = waldoImg.getBoundingClientRect();
+
+    let posX = (e.clientX - offsets.left) / offsets.width;
+    let posY = (e.clientY - offsets.top) / offsets.height;
+    setX(posX);
+    setY(posY);
+
+    console.log(x.toFixed(2), y.toFixed(2));
+  };
 
   useEffect(() => {
     const waldoImg = document.getElementById("waldo-img") as HTMLImageElement;
-
-    console.log(waldoImg.width, waldoImg.height);
-
-    const handlelclick = (e: MouseEvent) => {
-      setDisplay(!display);
-      setPos([e.clientY + 10, e.clientX + 10]);
-    };
-
     waldoImg.addEventListener("click", handlelclick);
     return () => waldoImg.removeEventListener("click", handlelclick);
   });
@@ -40,9 +67,14 @@ export default function ImageContainer() {
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-          <button>Rick</button>
-          <button>Morty</button>
-          <button>Jerry</button>
+          <button onClick={() => handleButtonClick(data.rick)}>Rick</button>
+          <button onClick={() => handleButtonClick(data.morty)}>Morty</button>
+          <button onClick={() => handleButtonClick(data.falmingo)}>
+            Flamingo
+          </button>
+          <button onClick={() => handleButtonClick(data.strawberry)}>
+            Strawberry
+          </button>
           <button
             style={{ backgroundColor: "lightcoral" }}
             onClick={() => setDisplay(!display)}
