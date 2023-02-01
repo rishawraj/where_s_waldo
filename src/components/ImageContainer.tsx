@@ -3,56 +3,20 @@ import image from "../assets/img1.jpg";
 
 export default function ImageContainer() {
   const [pos, setPos] = useState([0, 0]);
+  const [display, setDisplay] = useState(true);
 
   useEffect(() => {
     const waldoImg = document.getElementById("waldo-img") as HTMLImageElement;
-    const originalWidth = 1920;
-    const originalHeight = 1080;
 
-    const waldoX = 50;
-    const waldoY = 100;
+    console.log(waldoImg.width, waldoImg.height);
 
-    const boxSize = 50;
+    const handlelclick = (e: MouseEvent) => {
+      setDisplay(!display);
+      setPos([e.clientY + 10, e.clientX + 10]);
+    };
 
-    waldoImg?.addEventListener("load", () => {
-      const pos = waldoImg.getBoundingClientRect();
-
-      const scaleX = waldoImg.width / originalWidth;
-      const scaleY = waldoImg.height / originalHeight;
-      console.log("scale", scaleX, scaleY);
-
-      const scaledX = waldoX * scaleX;
-      const scaledY = waldoY * scaleY;
-
-      const boxX = scaledX - boxSize / 2;
-      const boxY = scaledY - boxSize / 2;
-      console.log("box X Y", boxX, boxY);
-
-      // the following are the x/y coordinates of the box relative to the page:
-      const boxLeft = boxX + pos.left;
-      const boxTop = boxY + pos.top;
-      const boxRight = boxLeft + boxSize;
-      const boxBottom = boxTop + boxSize;
-      console.log("boxt top left", boxTop, boxLeft);
-
-      setPos([boxTop, boxLeft]);
-
-      //
-      waldoImg.addEventListener("click", (e: MouseEvent) => {
-        const pageX = e.pageX;
-        const pageY = e.pageY;
-        if (
-          pageX >= boxLeft &&
-          pageX <= boxRight &&
-          pageY >= boxTop &&
-          pageY <= boxBottom
-        ) {
-          console.log(true);
-        } else {
-          console.log(false);
-        }
-      });
-    });
+    waldoImg.addEventListener("click", handlelclick);
+    return () => waldoImg.removeEventListener("click", handlelclick);
   });
 
   return (
@@ -63,6 +27,30 @@ export default function ImageContainer() {
         alt="find_waldo"
         style={{ border: "2px solid black", width: "100%", height: "100%" }}
       />
+      <div
+        style={{
+          backgroundColor: "lightgray",
+          width: "150px",
+          padding: " 5px",
+          position: "absolute",
+          display: `${display ? "none" : "flex"}`,
+          flexDirection: "column",
+          top: `${pos[0]}px`,
+          left: `${pos[1]}px`,
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+          <button>Rick</button>
+          <button>Morty</button>
+          <button>Jerry</button>
+          <button
+            style={{ backgroundColor: "lightcoral" }}
+            onClick={() => setDisplay(!display)}
+          >
+            cancel
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
