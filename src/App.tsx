@@ -1,8 +1,7 @@
 import ImageContainer from "./components/ImageContainer";
-// import NavBar from "./components/NavBar";
 import { NavBar } from "./components/NavBar";
-import "./App.css";
 import { useState } from "react";
+import "./App.css";
 
 const App: React.FC = () => {
   const [status, setStatus] = useState({
