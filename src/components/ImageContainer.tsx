@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import image from "../assets/img1.jpg";
 import { data } from "./data";
 
-export default function ImageContainer() {
+type typeProp = {
+  setNavStatus: (name: string) => void;
+};
+
+export default function ImageContainer({ setNavStatus }: typeProp) {
   const [pos, setPos] = useState([0, 0]);
   const [display, setDisplay] = useState(true);
   const [x, setX] = useState(0);
@@ -13,13 +17,15 @@ export default function ImageContainer() {
     left: number;
     right: number;
     bottom: number;
+    name: string;
   };
 
-  const handleButtonClick = ({ top, left, right, bottom }: obj): void => {
-    if (left < x && x < right && top < y && bottom > y) {
-      console.log("yes");
+  const handleButtonClick = ({ top, left, right, bottom, name }: obj): void => {
+    if (left <= x && x <= right && top <= y && bottom >= y) {
+      alert(`You've found ${name}!`);
+      setNavStatus(`${name}`);
     } else {
-      console.log("no");
+      alert(`That is not ${name}`);
     }
     setDisplay(!display);
   };

@@ -1,11 +1,17 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-import waldoImg from "../assets/waldo.jpg";
-import odlawImg from "../assets/odlaw.jpg";
-import wendyImg from "../assets/wendy.jpeg";
-import wizardImg from "../assets/wizard.jpeg";
+interface Props {
+  status: {
+    rick: boolean;
+    morty: boolean;
+    flamingo: boolean;
+    strawberry: boolean;
+  };
+}
 
-export default function NavBar() {
+const NavBar: React.FC<Props> = (props) => {
+  console.log(props.status.flamingo);
+
   const imgStyle = {
     width: "50px",
     padding: "5px",
@@ -17,11 +23,8 @@ export default function NavBar() {
         display: "flex",
         alignItems: "center",
         width: "100%",
-        // backgroundColor: "lightcoral",
         backgroundColor: "#FFFFFF",
         justifyContent: "space-around",
-        // padding: "20px",
-        // paddingTop: "20px",
         padding: "20px",
         position: "sticky",
         top: "0px",
@@ -31,12 +34,18 @@ export default function NavBar() {
         style={{
           display: "flex",
           gap: "20px",
-          // backgroundColor: "red",
+          fontWeight: "bold",
+          fontSize: "24px",
         }}
       >
-        <img style={imgStyle} src={waldoImg} alt="waldo-img" />
-        <img style={imgStyle} src={odlawImg} alt="odlaw-img" />
-        <img style={imgStyle} src={wizardImg} alt="wizard-img" />
+        <div style={{ color: props.status.rick ? "red" : "black" }}>Rick</div>
+        <div style={{ color: props.status.morty ? "red" : "black" }}>Morty</div>
+        <div style={{ color: props.status.flamingo ? "red" : "black" }}>
+          Flamingo
+        </div>
+        <div style={{ color: props.status.strawberry ? "red" : "black" }}>
+          Strawberry
+        </div>
       </div>
 
       <div style={{ display: "flex", gap: "20px" }}>
@@ -44,4 +53,6 @@ export default function NavBar() {
       </div>
     </nav>
   );
-}
+};
+
+export { NavBar };
