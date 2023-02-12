@@ -20,12 +20,6 @@ export default function ImageContainer({ setNavStatus }: typeProp) {
     name: string;
   };
 
-  function convertToMinutesAndSeconds(ms: number): string {
-    const minutes = Math.floor(ms / 60000);
-    const seconds = ((ms % 60000) / 1000).toFixed(0);
-    return `${minutes}:${+seconds < 10 ? "0" : ""}${seconds}`;
-  }
-
   const handleButtonClick = ({ top, left, right, bottom, name }: obj): void => {
     if (left <= x && x <= right && top <= y && bottom >= y) {
       // alert(`You've found ${name}!`);
