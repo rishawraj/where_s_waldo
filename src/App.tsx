@@ -5,18 +5,24 @@ import Home from "./components/Home";
 import Login from "./components/AuthPages/Login";
 import SignUp from "./components/AuthPages/SignUp";
 import "./App.css";
+import { GameList } from "./components/GameList";
+import ForgotPassword from "./components/AuthPages/ForgotPassword";
 
 const App: React.FC = () => {
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/game" element={<Game />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/gamelist" element={<GameList />} />
+            <Route path="/game" element={<Game />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </>
   );
 };
