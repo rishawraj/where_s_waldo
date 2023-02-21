@@ -1,13 +1,12 @@
-import { async } from "@firebase/util";
 import React, { FormEvent, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
-import { getExperimentalSetting } from "@firebase/util";
-
 export default function Login() {
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const prevLocation = localStorage.getItem("prevLocation");
 
   const login = useAuth()?.login;
 
@@ -27,13 +26,16 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login?.(emailRef.current.value, passwordRef.current.value);
-      navigate("/");
+      // navigate("/");
+      navigate(prevLocation || "/");
     } catch {
       setError("Failed to log in: ");
+      alert("failed to login!");
     }
 
     setLoading(false);
   }
+
   return (
     <>
       <h1>Log In</h1>
@@ -59,7 +61,3 @@ export default function Login() {
     </>
   );
 }
-
-// export default function Login() {
-//   return <h1>Login</h1>;
-// }

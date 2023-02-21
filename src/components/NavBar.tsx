@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Modal } from "./Modal";
 
 interface Props {
   status: {
@@ -9,10 +10,16 @@ interface Props {
   };
 }
 
-const NavBar: React.FC<Props> = (props) => {
+const NavBar = (props: Props) => {
   const [allFound, setALlFound] = useState(false);
   const [startTime, setStartTime] = useState(0);
   const [countDown, setCountDown] = useState(0);
+  const [timer, setTimer] = useState(1);
+
+  function handleClick() {
+    // setIsOpen(!isOpen);
+    // setALlFound(!allFound);
+  }
 
   function convertToMinutesAndSeconds(ms: number): string {
     const minutes = Math.floor(ms / 60000);
@@ -20,20 +27,66 @@ const NavBar: React.FC<Props> = (props) => {
     return `${minutes}:${+seconds < 10 ? "0" : ""}${seconds}`;
   }
 
+  function fancyTimeFormat(duration: number) {
+    // Hours, minutes and seconds
+    const hrs = ~~(duration / 3600);
+    const mins = ~~((duration % 3600) / 60);
+    const secs = ~~duration % 60;
+
+    // Output like "1:01" or "4:03:59" or "123:03:59"
+    let ret = "";
+
+    if (hrs > 0) {
+      ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+    }
+
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs;
+
+    return ret;
+  }
+
+  function msToTime(s: number) {
+    var ms = s % 1000;
+    s = (s - ms) / 1000;
+    var secs = s % 60;
+    s = (s - secs) / 60;
+    var mins = s % 60;
+    var hrs = (s - mins) / 60;
+
+    return hrs + " hr : " + mins + " min: " + secs + " sec";
+  }
+
   useEffect(() => {
     const values = Object.values(props.status);
     const allTrue = values.every((v) => v == true);
+
     const now = new Date().getTime();
     const count = now - startTime;
+
     setCountDown(count);
     setALlFound(allTrue);
+  }, [props]);
+
+  useEffect(() => {
+    const values = Object.values(props.status);
+    const allTrue = values.every((v) => v == true);
+
+    if (allTrue) return;
+
+    const intrevalId = setInterval(() => {
+      setTimer((timer) => timer + 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(intrevalId);
+    };
   }, [props]);
 
   useEffect(() => {
     const image = document.getElementById("waldo-img");
     image?.addEventListener("load", () => {
       let now = new Date().getTime();
-      console.log(now);
       setStartTime(now);
     });
   }, []);
@@ -56,6 +109,7 @@ const NavBar: React.FC<Props> = (props) => {
         top: "0px",
       }}
     >
+      {" "}
       <div
         style={{
           display: "flex",
@@ -73,38 +127,10 @@ const NavBar: React.FC<Props> = (props) => {
           Strawberry
         </div>
       </div>
-
-      <div style={{ display: "flex", gap: "20px" }}>
-        <h1>Where's Waldo</h1>
-        {allFound ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              position: "absolute",
-              backgroundColor: " rgba(255,255,255,0.5)",
-              width: "100vw",
-              height: "100vh",
-              top: 0,
-              left: 0,
-            }}
-          >
-            <div
-              style={{
-                backgroundColor: "lightskyblue",
-                padding: "20px 50px",
-              }}
-            >
-              <h2>You Win!!!</h2>
-              {convertToMinutesAndSeconds(countDown)}
-              <p>please refresh the page to play again.</p>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
+      <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+        Timer: {fancyTimeFormat(timer)}
       </div>
+      {allFound ? <Modal handleClick={handleClick} /> : ""}
     </nav>
   );
 };
