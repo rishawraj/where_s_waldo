@@ -15,11 +15,7 @@ const NavBar = (props: Props) => {
   const [startTime, setStartTime] = useState(0);
   const [countDown, setCountDown] = useState(0);
   const [timer, setTimer] = useState(1);
-
-  function handleClick() {
-    // setIsOpen(!isOpen);
-    // setALlFound(!allFound);
-  }
+  const [finalTime, setFinalTime] = useState(0);
 
   function convertToMinutesAndSeconds(ms: number): string {
     const minutes = Math.floor(ms / 60000);
@@ -72,7 +68,10 @@ const NavBar = (props: Props) => {
     const values = Object.values(props.status);
     const allTrue = values.every((v) => v == true);
 
-    if (allTrue) return;
+    if (allTrue) {
+      setFinalTime(timer);
+      return;
+    }
 
     const intrevalId = setInterval(() => {
       setTimer((timer) => timer + 1);
@@ -130,7 +129,7 @@ const NavBar = (props: Props) => {
       <div style={{ fontSize: "20px", fontWeight: "bold" }}>
         Timer: {fancyTimeFormat(timer)}
       </div>
-      {allFound ? <Modal handleClick={handleClick} /> : ""}
+      {allFound ? <Modal finalTime={finalTime} /> : ""}
     </nav>
   );
 };
