@@ -1,5 +1,5 @@
 function About() {
-  return <div>About</div>;
+  return <div style={{ color: "white" }}>About</div>;
 }
 
 export default About;

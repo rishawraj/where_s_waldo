@@ -53,7 +53,14 @@ export default function ImageContainer({ setNavStatus }: typeProp) {
   });
 
   return (
-    <div style={{ padding: "2em", width: "100%", height: "100%" }}>
+    <div
+      style={{
+        padding: "2em",
+        width: "100%",
+        backgroundColor: "black",
+        // flex: "1",
+      }}
+    >
       <img
         id="waldo-img"
         src={image}

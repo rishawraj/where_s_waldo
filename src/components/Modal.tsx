@@ -1,6 +1,8 @@
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import { uuidv4 } from "@firebase/util";
+// import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useRef, useState } from "react";
 
@@ -9,9 +11,10 @@ type Prop = {
 };
 
 export const Modal = ({ finalTime }: Prop) => {
-  console.log(finalTime);
+  // console.log(finalTime);
 
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
 
   const displayValue = show ? "none" : "flex";
   function closeModal() {
@@ -23,13 +26,18 @@ export const Modal = ({ finalTime }: Prop) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("form submitted!");
+
     try {
       const name = inputRef.current?.value;
+
+      if (!name) return;
+
       await setDoc(doc(db, "game-one-leaderboard", `${uuidv4()}`), {
         name: name,
         time: finalTime,
       });
       setShow(!show);
+      navigate("/gameinfo");
     } catch {
       alert("failed to set data!");
     }

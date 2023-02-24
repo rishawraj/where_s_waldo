@@ -4,8 +4,14 @@
   box-sizing: border-box;
 }
 
-.Nav button {
-  /* background-color: blue; */
+div#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+}
+
+/* .Nav button {
   background-color: cornflowerblue;
   color: white;
   padding: 10px 20px;
@@ -17,7 +23,8 @@
 
 .Nav button:hover {
   background-color: #456bb1;
-}
+} */
+
 /* 
 h1 {
   background-color: rgba(173, 216, 230, 0.5);

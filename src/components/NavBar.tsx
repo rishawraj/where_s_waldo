@@ -100,12 +100,17 @@ const NavBar = (props: Props) => {
       style={{
         display: "flex",
         alignItems: "center",
-        width: "100%",
-        backgroundColor: "#FFFFFF",
+        width: "90%",
+        marginInline: "auto",
+        borderRadius: "16px",
+        // backgroundColor: "#FFFFFF",
+        backgroundColor: "lightgray",
         justifyContent: "space-around",
         padding: "20px",
         position: "sticky",
         top: "0px",
+        // marginLeft: "10px",
+        // marginRight: "10px",
       }}
     >
       {" "}

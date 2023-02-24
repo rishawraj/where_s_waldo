@@ -5,7 +5,7 @@ import Home from "./components/Home";
 import Login from "./components/AuthPages/Login";
 import SignUp from "./components/AuthPages/SignUp";
 import "./App.css";
-import { GameList } from "./components/GameInfo";
+import { GameInfo } from "./components/GameInfo";
 import ForgotPassword from "./components/AuthPages/ForgotPassword";
 import { Nav } from "./components/Nav";
 import About from "./components/About";
@@ -18,7 +18,7 @@ const App = () => {
           <Nav />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/gamelist" element={<GameList />} />
+            <Route path="/gameinfo" element={<GameInfo />} />
             <Route path="/game" element={<Game />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />

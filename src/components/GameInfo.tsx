@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import { getDoc, doc, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { useEffect, useState } from "react";
+import styles from "./GameInfo.module.css";
 
-export const GameList = () => {
+export const GameInfo = () => {
   interface DataItem {
     name: string;
     time: number;
@@ -12,12 +13,16 @@ export const GameList = () => {
   const [data, setData] = useState<DataItem[]>([]);
 
   const getData = async () => {
+    const newData: DataItem[] = [];
     const querySnapshot = await getDocs(collection(db, "game-one-leaderboard"));
     querySnapshot.forEach((doc) => {
-      setData((prev) => [
-        ...prev,
-        { name: doc.data().name, time: doc.data().time },
-      ]);
+      // setData((prev) => [
+      //   ...prev,
+      //   { name: doc.data().name, time: doc.data().time },
+      // ]);
+      newData.push({ name: doc.data().name, time: doc.data().time });
+      newData.sort((a, b) => a.time - b.time);
+      setData(newData);
     });
   };
 
@@ -30,45 +35,23 @@ export const GameList = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        backgroundColor: "lightblue",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100%",
-      }}
-    >
-      <h1>Game Info</h1>
-
-      <div
-        style={{
-          display: "flex",
-          gap: "40px",
-        }}
-      >
-        <div>
-          <h3>Image</h3>
-          <Link to="/game">Play</Link>
+    <div style={styles} className={styles.container}>
+      <div>
+        <div className={styles.heroImage}>
+          <Link to="/game">
+            <button className={styles.bn3637}>Play</button>
+          </Link>
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+
+        <div className={styles.leaderboardContainer}>
           <h3>Leader Board</h3>
-          <ul
-            style={{
-              listStyle: "none",
-            }}
-          >
+
+          <ul>
             {data.map((user) => {
               return (
                 <li>
-                  {user.name} , time: {user.time}
+                  <div>{user.name}</div>
+                  <div>{user.time}s</div>
                 </li>
               );
             })}

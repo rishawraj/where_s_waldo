@@ -1,18 +1,18 @@
 import { Link } from "react-router-dom";
+import img from "../assets/img1.jpg";
+import styles from "./Home.module.css";
 
 const Home = () => {
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <Link
-        style={{
-          padding: "10px",
-          margin: "20px",
-          backgroundColor: "lightcoral",
-        }}
-        to="/gamelist"
-      >
-        Game 1
-      </Link>
+    <div className={styles.container}>
+      <div className={styles.heading}>
+        <h2>Game List</h2>
+      </div>
+      <div className={styles.gamelist}>
+        <Link to="/gameinfo">
+          <p>Rick And Morty</p>
+        </Link>
+      </div>
     </div>
   );
 };

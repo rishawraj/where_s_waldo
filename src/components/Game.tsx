@@ -11,7 +11,6 @@ export const Game = () => {
     flamingo: false,
     strawberry: false,
   });
-
   const setNavStatus = (name: string): void => {
     let key = name;
     setStatus({ ...status, [key]: true });
@@ -21,8 +20,6 @@ export const Game = () => {
     <>
       <NavBar status={status} />
       <ImageContainer setNavStatus={setNavStatus} />
-      {/* <button onClick={handleClick}>open modal</button> */}
-      {/* {isOpen ? <Modal handleClick={handleClick} /> : ""} */}
     </>
   );
 };
