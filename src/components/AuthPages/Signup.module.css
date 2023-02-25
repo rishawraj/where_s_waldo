@@ -1,0 +1,40 @@
+.container {
+  background-color: white;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signupContainer {
+  padding: 30px;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
+
+.form {
+  width: 250px;
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+}
+.form input {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.form button {
+  margin-bottom: 15px;
+  border: 2px solid black;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background-color: black;
+  color: white;
+}

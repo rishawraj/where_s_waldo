@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import image from "../assets/img1.jpg";
 import { data } from "./data";
+import styles from "./ImageContainer.module.css";
 
 type typeProp = {
   setNavStatus: (name: string) => void;
@@ -12,7 +13,7 @@ export default function ImageContainer({ setNavStatus }: typeProp) {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
 
-  type obj = {
+  type Prop = {
     top: number;
     left: number;
     right: number;
@@ -20,7 +21,13 @@ export default function ImageContainer({ setNavStatus }: typeProp) {
     name: string;
   };
 
-  const handleButtonClick = ({ top, left, right, bottom, name }: obj): void => {
+  const handleButtonClick = ({
+    top,
+    left,
+    right,
+    bottom,
+    name,
+  }: Prop): void => {
     if (left <= x && x <= right && top <= y && bottom >= y) {
       // alert(`You've found ${name}!`);
       setNavStatus(`${name}`);
@@ -69,9 +76,9 @@ export default function ImageContainer({ setNavStatus }: typeProp) {
       />
       <div
         style={{
-          backgroundColor: "lightgray",
+          backgroundColor: "white",
           width: "150px",
-          padding: " 5px",
+          padding: "10px",
           position: "absolute",
           display: `${display ? "none" : "flex"}`,
           flexDirection: "column",
@@ -79,7 +86,10 @@ export default function ImageContainer({ setNavStatus }: typeProp) {
           left: `${pos[1]}px`,
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+        <div
+          className={styles.popup}
+          // style={{ display: "flex", flexDirection: "column", gap: "2px" }}
+        >
           <button onClick={() => handleButtonClick(data.rick)}>Rick</button>
           <button onClick={() => handleButtonClick(data.morty)}>Morty</button>
           <button onClick={() => handleButtonClick(data.falmingo)}>

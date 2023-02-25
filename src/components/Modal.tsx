@@ -42,6 +42,13 @@ export const Modal = ({ finalTime }: Prop) => {
       alert("failed to set data!");
     }
   };
+  const buttonStyle = {
+    background: "transparent",
+    padding: "5px",
+    border: "2px solid black",
+    marginBottom: "10px",
+    cursor: "pointer",
+  };
 
   return (
     <div
@@ -62,17 +69,31 @@ export const Modal = ({ finalTime }: Prop) => {
       <div
         style={{
           display: "inline-block",
-          backgroundColor: "red",
+          backgroundColor: "white",
+
           padding: "40px",
         }}
       >
-        <h1>Add Name to Leaderboard!</h1>
+        <h1 style={{ marginBottom: "20px" }}>Add Name to Leaderboard!</h1>
 
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form
+          style={{ display: "flex", flexDirection: "column" }}
+          onSubmit={(e) => handleSubmit(e)}
+        >
           <label htmlFor="name">Name</label>
-          <input type="text" ref={inputRef} /> <br />
-          <button type="submit">send</button>
-          <button onClick={closeModal}>cancel</button>
+          <input
+            style={{ padding: "5px" }}
+            type="text"
+            ref={inputRef}
+            required
+          />{" "}
+          <br />
+          <button style={buttonStyle} type="submit">
+            send
+          </button>
+          <button style={buttonStyle} onClick={closeModal}>
+            cancel
+          </button>
         </form>
       </div>
     </div>

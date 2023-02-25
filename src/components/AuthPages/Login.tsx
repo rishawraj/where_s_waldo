@@ -1,6 +1,7 @@
 import React, { FormEvent, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import styles from "./Login.module.css";
 
 export default function Login() {
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -26,7 +27,6 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login?.(emailRef.current.value, passwordRef.current.value);
-      // navigate("/");
       navigate(prevLocation || "/");
     } catch {
       setError("Failed to log in: ");
@@ -37,27 +37,30 @@ export default function Login() {
   }
 
   return (
-    <>
-      <h1>Log In</h1>
-      <div>
-        <form onSubmit={handleSubmit}>
+    <div className={styles.container}>
+      <div className={styles.loginContainer}>
+        <h1>Log In</h1>
+
+        <form className={styles.form} onSubmit={handleSubmit}>
           <label htmlFor="email">Email</label>
           <input type="text" id="email" name="email" ref={emailRef} />
-          <br />
+
           <label htmlFor="password">Password</label>
           <input type="text" id="passwrod" name="password" ref={passwordRef} />
-          <br />
+
           <button disabled={loading} type="submit">
             Log In
           </button>
         </form>
+
         <div>
           <Link to="/forgot-password">forgot password</Link>
         </div>
+
         <div>
           Dont' Have an Account <Link to="/signup">Sign Up</Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
