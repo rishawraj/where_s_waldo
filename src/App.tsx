@@ -14,7 +14,7 @@ const App = () => {
   return (
     <>
       <AuthProvider>
-        <Router>
+        <Router basename="/where_s_waldo">
           <Nav />
           <Routes>
             <Route path="/" element={<Home />} />
